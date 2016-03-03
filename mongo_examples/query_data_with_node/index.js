@@ -28,11 +28,47 @@ var findRestaurants = function(db, callback) {
 
 };
 
+var findRestaurantsWithQuery = function(db, query, callback) {
+
+	var cursor = db.collection('restaurants').find(query);
+
+	cursor.each(function(error, doc) {
+
+		assert.equal(error, null);
+
+		if (doc) {
+
+			console.log(JSON.stringify(doc));
+
+		} else {
+
+			callback();
+
+		}
+
+
+	});
+
+};
+
+// MongoClient.connect(url, function(error, db) {
+
+// 	assert.equal(error, null);
+
+// 	findRestaurants(db, function() {
+// 		console.log('Done!');
+// 		db.close();
+// 	});
+
+// });
+
 MongoClient.connect(url, function(error, db) {
 
 	assert.equal(error, null);
 
-	findRestaurants(db, function() {
+	var query = { "borough": "Manhattan" };
+
+	findRestaurantsWithQuery(db, query, function() {
 		console.log('Done!');
 		db.close();
 	});
