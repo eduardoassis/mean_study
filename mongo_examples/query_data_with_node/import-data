@@ -1,0 +1,11 @@
+
+
+On mongo-shell run the following scripts:
+
+Fisrt clean the collection:
+
+db.restaurants.remove({})
+
+Now, in common shell you will run the next command to fill the collection with data: 
+
+mongoimport --db test --collection restaurants --drop --file ../data/dataset.json
