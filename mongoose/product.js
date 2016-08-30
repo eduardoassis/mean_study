@@ -15,7 +15,8 @@ var productSchema = {
 			enum: ['USD', 'EUR', 'GBP'],
 			required: true
 		}
-	}
+	},
+	category: Category.categorySchema;
 
 };
 
