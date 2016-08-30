@@ -20,5 +20,25 @@ var productSchema = {
 
 };
 
-module.exports = new mongoose.Schema(productSchema);
+var schema = new mongoose.Schema(productSchema);
+
+var currencySymbols = {
+  'USD': '$',
+  'EUR': '€',
+  'GBP': '£'
+};
+
+/*
+ * Human-readable string form of price - "$25" rather
+ * than "25 USD"
+ */
+schema.virtual('displayPrice').get(function() {
+  return currencySymbols[this.price.currency] +
+    '' + this.price.amount;
+});
+
+schema.set('toObject', { virtuals: true });
+schema.set('toJSON', { virtuals: true });
+
+module.exports = schema;
 module.exports.productSchema = productSchema;
