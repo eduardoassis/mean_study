@@ -16,7 +16,7 @@ var productSchema = {
 			required: true
 		}
 	},
-	category: Category.categorySchema;
+	category: Category.categorySchema
 
 };
 

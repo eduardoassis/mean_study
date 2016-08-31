@@ -1,32 +1,29 @@
 var mongoose = require('mongoose');
+var productSchema = require('./product');
 
-var schema = require('./schema');
+var Product = mongoose.model('Product', productSchema);
 
-mongoose.connect('mongodb://localhost:27017/test');
-
-// Parameters are: model name, schema, collection name
-
-var User = mongoose.model('User', schema, 'users');
-
-var user = new User({name: 'John Smith', email: 'john@smith.io'});
-
-user.save(function(error) {
-
-	if (error) {
-		console.log(error);
-		process.exit(1);
-	}
-
-	User.find({email: 'john@smith.io'}, function(error, docs){
-
-		if (error) {
-			console.log(error);
-			process.exit(1);
-		}
-
-		console.log(require('util').inspect(docs));
-		process.exit(0);
-
-	});
+var p = new Product({
+  name: 'test',
+  price: {
+    amount: 5,
+    currency: 'USD'
+  },
+  category: {
+    name: 'test'
+  }
 });
 
+console.log(p.displayPrice); // "$5"
+
+p.price.amount = 20;
+console.log(p.displayPrice); // "$20"
+
+// { ... "displayPrice": "$20", ... }
+console.log(JSON.stringify(p));
+
+var obj = p.toObject();
+console.log(obj.displayPrice); // "$20"
+
+// { ... "displayPrice": "$20", ... }
+console.log(JSON.stringify(obj));

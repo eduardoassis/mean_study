@@ -4,7 +4,7 @@ var categorySchema = {
 
 	_id: { type: String },
 	parent: {
-		type: String
+		type: String,
 		ref: 'Category'
 	},
 	ancestors: [{
