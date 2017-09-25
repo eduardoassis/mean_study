@@ -1,9 +1,16 @@
 var express = require('express')
-  , app = express()
-  , router = express.Router();
+	, router = express.Router();
 
-app.use(require('./controllers'));
+module.exports = function() {
 
-app.listen(3000, function() {
-  console.log('Listening on port 3000...')
-})
+	var app = express();
+
+	app.use(require('./controllers'));
+
+	app.get('/', function(req, res){
+		res.send('Home page');
+	});
+
+
+	return app;
+};
