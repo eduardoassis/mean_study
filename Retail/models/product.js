@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Category = require('./category');
+var fx = require('./fx');
 
 var productSchema = {
 	name: {
@@ -15,15 +16,26 @@ var productSchema = {
 	price: {
 		amount: {
 			type: Number,
-			required: true
+			required: true,
+			set: function(value) {
+				this.internal.approximatePriceUSD = value / (fx()[this.price.currency] || 1);
+				return value;
+			}
 		},
 		currency: {
 			type: String,
 			enum: ['USD', 'EUR', 'GBP'],
-			required: true
+			required: true,
+			set: function(value){
+				this.internal.approximatePriceUSD = this.price.amount / (fx()[value] || 1);
+				return value;
+			}
 		}
 	},
-	category: Category.categorySchema
+	category: Category.categorySchema,
+	internal: {
+		approximatePriceUSD: Number
+	}
 };
 
 var schema = new mongoose.Schema(productSchema);
