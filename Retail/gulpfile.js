@@ -18,3 +18,7 @@ gulp.task('test', function() {
       }
     });
 });
+
+gulp.task('watch', function() {
+  gulp.watch(['./models/*.js', './controllers/*.js', './tests/*.js'], ['test']);
+});

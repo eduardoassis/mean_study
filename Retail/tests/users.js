@@ -70,4 +70,33 @@ describe('User API', function() {
     });
   });
 
+  it('should load all users in data base', function (done) {
+  	
+  	var users = [
+
+  		{	profile: {	username: "user1",	picture: "http://teste.teste/image.png"	},	data: {	oauth: "teste1"	}	},
+  		{	profile: {	username: "user2",	picture: "http://teste.teste/image.png"	},	data: {	oauth: "teste2"	}	},
+  		{	profile: {	username: "user3",	picture: "http://teste.teste/image.png"	},	data: {	oauth: "teste3"	}	},
+  		{	profile: {	username: "user4",	picture: "http://teste.teste/image.png"	},	data: {	oauth: "teste4"	}	}
+		{	profile: {	username: "user5",	picture: "http://teste.teste/image.png"	},	data: {	oauth: "teste5"	}	}
+  	];
+
+  	User.create(users, function (error, users) {
+
+  		var url = URL_ROOT + '/users';
+
+  		superagent.get(url, function (error, res) {
+			assert.ifError(error);
+
+			var result;
+			assert.doesNotThrow(function () {
+				result = JSON.parse(res.text);
+			});
+
+			assert.equal(result.users.length, 5);
+  		});
+  	})
+
+  });
+
 });
