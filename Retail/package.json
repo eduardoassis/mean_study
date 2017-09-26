@@ -5,7 +5,9 @@
 	    "mocha": "2.2.4",
 	    "superagent": "1.2.0",
         "gulp": "3.8.11",
-    	"gulp-mocha": "2.0.1"
+    	"gulp-mocha": "2.0.1",
+    	"wagner-core": "0.2.0",
+    	"http-status": "1.0.1"
 	},
 	"scripts": {
 		"test": "gulp test",

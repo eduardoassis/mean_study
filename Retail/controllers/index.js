@@ -1,6 +1,10 @@
-var express = require('express')
-  , router = express.Router();
+var express = require('express');
 
-router.use('/users', require('./users'));
+module.exports = function (wagner) {
 
-module.exports = router;
+	var api = express.Router();
+
+	api.use(require('./users')(wagner));
+
+	return api;
+};

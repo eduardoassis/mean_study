@@ -1,8 +1,33 @@
-var express = require('express')
-	, router = express.Router();
+var express = require('express'),
+	status = require('http-status');
 
-router.get('/:user', function(req, res){
-	res.send('Page for user ' + req.params.user + ' with option ' + req.query.option);
-});
+module.exports = function (wagner) {
+	
+	var api = express.Router();
 
-module.exports = router;
+	api.get('/users/:username', wagner.invoke(function (User) {
+
+		return function (req, res) {
+
+			User.findOne({ 'profile.username': req.params.username }, function (error, user) {
+
+				if (error) {
+				return res.
+						status(status.INTERNAL_SERVER_ERROR).
+						json({ error: error.toString() });
+				}
+
+				if (!user) {
+					return res.
+						status(status.NOT_FOUND).
+						json({ error: 'Not found' });
+				}
+				res.json({ user: user });
+
+			});
+
+		};
+
+	}));
+	return api;
+};

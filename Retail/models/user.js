@@ -9,7 +9,7 @@ var userSchema = {
 			lowercase: true
 		},
 		picture: {
-			type: true,
+			type: String,
 			required: true,
 			match: /^http:\/\//i
 		}
@@ -34,3 +34,4 @@ var userSchema = {
 };
 
 module.exports = new mongoose.Schema(userSchema);
+module.exports.userSchema = userSchema;
