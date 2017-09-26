@@ -29,5 +29,26 @@ module.exports = function (wagner) {
 		};
 
 	}));
+
+	api.get('/users', wagner.invoke(function (User) {
+		
+		return function (req, res) {
+			User.find({}, function (error, users) {
+				if (error) {
+					return res
+							.status(status.INTERNAL_SERVER_ERROR)
+							.json({error: error.toString() });
+				}
+
+				if (!users) {
+					return res
+							.status(status.NOT_FOUND)
+							.json({error: 'Not found'});
+				}
+				res.json(users);
+			});
+		};
+	}));
+
 	return api;
 };
